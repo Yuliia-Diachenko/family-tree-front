@@ -2,7 +2,7 @@ import css from './ModalWindow.module.css';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import Button from '../Button/Button';
+import { Button } from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -12,6 +12,7 @@ const style = {
     width: 400,
     bgcolor: 'background.paper',
     border: '2px solid #000',
+    borderradius: '8px',
     boxShadow: 24,
     p: 4,
   };
@@ -23,7 +24,7 @@ export default function ModalWindow({children}) {
     
     return (
         <>
-        <Button type='button' onClick={handleOpen}>{children}</Button>
+        <Button type='button' onClick={handleOpen} className={css.button}>{children}</Button>
         <Modal
         open={open}
         onClose={handleClose}

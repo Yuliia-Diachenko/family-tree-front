@@ -1,5 +1,5 @@
 import ModalWindow from '../ModalWindow/ModalWindow.jsx';
-import Button from '../Button/Button.jsx';
+
 import Layout from "../Layout/Layout";
 import css from './App.module.css';
 import FamilyTree from '../FamilyTree/FamilyTree.jsx';
@@ -13,8 +13,8 @@ function App() {
     <FamilyTree />
    <div className={css.buttonBar}>
     <ModalWindow>Create</ModalWindow>
-    <Button>Update</Button>
-    <Button>Delete</Button>
+    <ModalWindow>Update</ModalWindow>
+    <ModalWindow>Delete</ModalWindow>
     </div>
     </main>
     </Layout>
