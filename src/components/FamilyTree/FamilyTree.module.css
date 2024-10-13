@@ -1,7 +1,12 @@
 .list {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 40px;
+    max-width: 1200px;
     gap: 20px;
-    color: black;
-    margin: 100px 100px;
+    margin: 50px 100px;
+    list-style-type: none;
+    padding: 0;
+    
 }

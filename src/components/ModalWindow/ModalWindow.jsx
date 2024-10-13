@@ -1,8 +1,9 @@
 import css from './ModalWindow.module.css';
-import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { Button } from '@mui/material';
+import { IoMdClose } from "react-icons/io";
+import FormCreate from '../FormCreate/FormCreate';
 
 const style = {
     position: 'absolute',
@@ -18,21 +19,24 @@ const style = {
   };
 
 export default function ModalWindow({children}) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     
     return (
         <>
-        <Button type='button' onClick={handleOpen} className={css.button}>{children}</Button>
+        <button type='button' onClick={handleOpen} className={css.button}>{children}</button>
         <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-      >
+        >
         <Box sx={style} className={css.container}>
-            {children}
+        <button onClick={handleClose} className={css.iconClose}>
+        <IoMdClose />
+        </button>
+           <FormCreate/>
         </Box>
       </Modal>
         </>

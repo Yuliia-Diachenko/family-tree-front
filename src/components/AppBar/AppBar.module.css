@@ -10,5 +10,9 @@
 }
 .nameProject {
     color: black;
+    padding-right: 6px;
 }
 
+.logo {
+    padding-left: 6px;
+}
