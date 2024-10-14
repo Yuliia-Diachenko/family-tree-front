@@ -46,7 +46,7 @@ export default function ModalWindow() {
         <button onClick={handleClose} className={css.iconClose}>
         <IoMdClose />
         </button>
-                    {modalType === 'create' && <FormCreate />}
+                    {modalType === 'create' && <FormCreate onClose={handleClose}/>}
                     {modalType === 'update' && <FormUpdate />}
                     {modalType === 'delete' && <DeletePerson />}
         </Box>

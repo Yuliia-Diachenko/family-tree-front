@@ -1,5 +1,5 @@
-import { useDispatch} from "react-redux";
-import useId from "react";
+import { useDispatch } from "react-redux";
+import { useId } from "react";
 import { addPerson } from "../../redux/operations.js";
 import css from './FormCreate.module.css';
 import { Formik, Form, Field } from 'formik';
@@ -9,71 +9,94 @@ import * as Yup from 'yup';
 const CreateSchema = Yup.object().shape({
     name: Yup.string().min(3, 'Too Short!').max(34, 'Too Long!').required('Required'),
     age: Yup.number().min(1, 'To Small').max(150, 'Too Much').required('Required'),
-    parents: Yup.string(),
-    ansestor: Yup.string(),
-    children: Yup.string(),
-    grandchildren: Yup.string()
-})
+});
 
-export default function FormCreate() {
-    const fieldId = useId;
+export default function FormCreate({ onClose }) {
+    const fieldId = useId();
     const dispatch = useDispatch();
-    const handleSubmit=(event, values) => {
-        event.preventDefault();
-        const form = event.target;
-        dispatch(addPerson({
+
+    const handleSubmit = (values, { setSubmitting, resetForm }) => {
+        console.log("Submitting values:", values);
+
+        const toArray = (input) => {
+            if (Array.isArray(input)) return input; // Якщо це вже масив
+            if (typeof input === 'string' && input.trim()) return input.split(',').map(item => item.trim()); // Якщо це заповнений рядок
+            return []; // Якщо це пустий рядок або незаповнене поле
+        };
+
+        const toNumber = (input) => {
+            return typeof input === 'string' ? parseFloat(input) : input;
+        };
+
+        const personData = {
             name: values.name,
-            age: values.age,
-            parents: values.parents,
-            ansestor: values.ansestor,
-            children: values.children,
-            grandchildren: values.grandchildren 
-        }));
-        form.reset();
-    }
+            age: toNumber(values.age),
+            parents: toArray(values.parents),
+            ansestor: toArray(values.ansestor),
+            children: toArray(values.children),
+            grandchildren: toArray(values.grandchildren)
+        };
+
+        console.log("Submitting person data:", personData);
+
+        dispatch(addPerson(personData))
+            .then(response => {
+                console.log("Response:", response);
+                resetForm();
+                onClose(); // Закриваємо модальне вікно після успішного додавання
+            })
+            .catch(error => {
+                console.error("Error adding person:", error.response ? error.response.data : error.message);
+            })
+            .finally(() => {
+                setSubmitting(false);
+            });
+    };
+
     return (
         <Formik
-        initialValues={{
-          name: '',
-          age: '',
-          parents:[],
-          ansestor: [],
-          children: [],
-          grandchildren: []
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={CreateSchema}
-        enableReinitialize
+            initialValues={{
+                name: '',
+                age: null,
+                parents: [],
+                ansestor: [],
+                children: [],
+                grandchildren: []
+            }}
+            onSubmit={handleSubmit}
+            validationSchema={CreateSchema}
+            enableReinitialize
         >
-        <Form className={css.formContainer}>
-            <h3 className={css.formHeader}>Create a family member</h3>
-            <label htmlFor={`${fieldId}-name`}  className={css.label}>Name</label>
-            <Field type="text" name="name" id={`${fieldId}-name`} className={css.input}></Field>
-            <ErrorMessage name="name" component="span" className={css.error}></ErrorMessage>
+            {({ isSubmitting }) => (
+                <Form className={css.formContainer}>
+                    <h3 className={css.formHeader}>Create a family member</h3>
+                    <label htmlFor={`${fieldId}-name`} className={css.label}>Name</label>
+                    <Field type="text" name="name" id={`${fieldId}-name`} className={css.input} />
+                    <ErrorMessage name="name" component="span" className={css.error} />
 
-            <label htmlFor={`${fieldId}-age`} className={css.label}>Age</label>
-            <Field type="text" name="age" id={`${fieldId}-age`} className={css.input}></Field>
-            <ErrorMessage name="age" component="span" className={css.error}></ErrorMessage>
+                    <label htmlFor={`${fieldId}-age`} className={css.label}>Age</label>
+                    <Field type="text" name="age" id={`${fieldId}-age`} className={css.input} />
+                    <ErrorMessage name="age" component="span" className={css.error} />
 
-            <label htmlFor={`${fieldId}-parents`} className={css.label}>Parents</label>
-            <Field type="text" name="parents" id={`${fieldId}-parents`} className={css.input}></Field>
-            <ErrorMessage name="parents" component="span" className={css.error}></ErrorMessage>
+                    <label htmlFor={`${fieldId}-parents`} className={css.label}>Parents</label>
+                    <Field type="text" name="parents" id={`${fieldId}-parents`} className={css.input} />
+                    <ErrorMessage name="parents" component="span" className={css.error} />
 
-            <label htmlFor={`${fieldId}-ansestor`} className={css.label}>Ansestor</label>
-            <Field type="text" name="ansestor" id={`${fieldId}-ansestor`} className={css.input}></Field>
-            <ErrorMessage name="ansestor" component="span" className={css.error}></ErrorMessage>
+                    <label htmlFor={`${fieldId}-ansestor`} className={css.label}>Ansestor</label>
+                    <Field type="text" name="ansestor" id={`${fieldId}-ansestor`} className={css.input} />
+                    <ErrorMessage name="ansestor" component="span" className={css.error} />
 
-            <label htmlFor={`${fieldId}-children`} className={css.label}>Children</label>
-            <Field type="text" name="children" id={`${fieldId}-children`} className={css.input}></Field>
-            <ErrorMessage name="children" component="span" className={css.error} ></ErrorMessage>
+                    <label htmlFor={`${fieldId}-children`} className={css.label}>Children</label>
+                    <Field type="text" name="children" id={`${fieldId}-children`} className={css.input} />
+                    <ErrorMessage name="children" component="span" className={css.error} />
 
-            <label htmlFor={`${fieldId}-grandchildren`} className={css.label}>Grandchildren</label>
-            <Field type="text" name="grandchildren" id={`${fieldId}-grandchildren`} className={css.input}></Field>
-            <ErrorMessage name="grandchildren" component="span" className={css.error}></ErrorMessage>
-            
-            <button  type="submit" className={css.button}>Create</button>
-        </Form>
+                    <label htmlFor={`${fieldId}-grandchildren`} className={css.label}>Grandchildren</label>
+                    <Field type="text" name="grandchildren" id={`${fieldId}-grandchildren`} className={css.input} />
+                    <ErrorMessage name="grandchildren" component="span" className={css.error} />
+
+                    <button type="submit" className={css.button} disabled={isSubmitting}>Create</button>
+                </Form>
+            )}
         </Formik>
-    )
-
+    );
 }

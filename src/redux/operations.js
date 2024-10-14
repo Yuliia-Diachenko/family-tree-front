@@ -6,7 +6,7 @@ axios.defaults.baseURL = "https://family-tree-6zsd.onrender.com";
 export const getFamily = createAsyncThunk("family/getFamily",
     async (_, thunkAPI) => {
         try {
-            const response = await axios.get('/family');
+            const response = await axios.get('/family/');
             console.log("API Response:", response.data); 
             return response.data;
         } catch (error) {
@@ -35,7 +35,7 @@ export const addPerson = createAsyncThunk(
     async (newPerson, thunkAPI) => {      
         
         try {
-            const response = await axios.post('/family', newPerson);
+            const response = await axios.post('/family/', newPerson);
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
