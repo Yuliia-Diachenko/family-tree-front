@@ -11,9 +11,7 @@ function App() {
     <main>
     <FamilyTree />
    <div className={css.buttonBar}>
-    <ModalWindow>Create</ModalWindow>
-    <ModalWindow>Update</ModalWindow>
-    <ModalWindow>Delete</ModalWindow>
+    <ModalWindow />  
     </div>
     </main>
     </Layout>

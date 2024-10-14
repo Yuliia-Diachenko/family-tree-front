@@ -3,7 +3,9 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { IoMdClose } from "react-icons/io";
-import FormCreate from '../FormCreate/FormCreate';
+import FormCreate from '../FormCreate/FormCreate.jsx';
+import DeletePerson from '../DeletePerson/DeletePerson.jsx';
+import FormUpdate from '../FormUpdate/FormUpdate.jsx';
 
 const style = {
     position: 'absolute',
@@ -18,14 +20,22 @@ const style = {
     p: 4,
   };
 
-export default function ModalWindow({children}) {
+export default function ModalWindow() {
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const [modalType, setModalType] = useState('');
+
+    const handleOpen = (type) => {
+        setModalType(type);
+        setOpen(true);
+    };
+
     const handleClose = () => setOpen(false);
     
     return (
         <>
-        <button type='button' onClick={handleOpen} className={css.button}>{children}</button>
+            <button type='button' onClick={() => handleOpen('create')} className={css.button}>Create</button>
+            <button type='button' onClick={() => handleOpen('update')} className={css.button}>Update</button>
+            <button type='button' onClick={() => handleOpen('delete')} className={css.button}>Delete</button>
         <Modal
         open={open}
         onClose={handleClose}
@@ -36,7 +46,9 @@ export default function ModalWindow({children}) {
         <button onClick={handleClose} className={css.iconClose}>
         <IoMdClose />
         </button>
-           <FormCreate/>
+                    {modalType === 'create' && <FormCreate />}
+                    {modalType === 'update' && <FormUpdate />}
+                    {modalType === 'delete' && <DeletePerson />}
         </Box>
       </Modal>
         </>
