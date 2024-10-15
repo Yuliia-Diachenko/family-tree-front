@@ -4,12 +4,10 @@ import { selectFamily, selectLoading } from '../../redux/selectors';
 import { getFamily } from "../../redux/operations";
 import Person from '../Person/Person';
 import css from './FamilyTree.module.css';
-import useId from "react";
 
 export default function FamilyTree() {
     const dispatch = useDispatch();
-    const listItemId = useId;
-
+ 
     useEffect(() => {
         dispatch(getFamily());
     }, [dispatch]);
@@ -35,7 +33,7 @@ export default function FamilyTree() {
     return (
         <ul className={css.list}>
             {family.map((person) => (
-                <li key={listItemId}>
+                <li key={`${person._id}`}>
                     <Person person={person} />
                 </li>
             ))}

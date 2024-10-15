@@ -35,9 +35,16 @@ export const addPerson = createAsyncThunk(
     async (newPerson, thunkAPI) => {      
         
         try {
-            const response = await axios.post('/family/', newPerson);
+            console.log("Sending POST request with data:", newPerson);
+            const response = await axios.post('/family/', newPerson, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }}
+            );
+            console.log("Response from server:", response.data);
             return response.data;
         } catch (error) {
+            console.error("Error response from server:", error.response ? error.response.data : error.message);
             return thunkAPI.rejectWithValue(error.message);
           }
 });

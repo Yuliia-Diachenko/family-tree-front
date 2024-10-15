@@ -8,7 +8,12 @@ import * as Yup from 'yup';
 
 const CreateSchema = Yup.object().shape({
     name: Yup.string().min(3, 'Too Short!').max(34, 'Too Long!').required('Required'),
-    age: Yup.number().min(1, 'To Small').max(150, 'Too Much').required('Required'),
+    age: Yup.number().min(1, 'Too Small').max(150, 'Too Much').required('Required'),
+    parents: Yup.string().matches(/^[^,]+(,[^,]+)*$/, 'Parents should be a comma-separated string'),
+    ancestors: Yup.string().matches(/^[^,]+(,[^,]+)*$/, 'Ancestors should be a comma-separated string'),
+    children: Yup.string().matches(/^[^,]+(,[^,]+)*$/, 'Children should be a comma-separated string'),
+    grandchildren: Yup.string().matches(/^[^,]+(,[^,]+)*$/, 'Grandchildren should be a comma-separated string'),
+       
 });
 
 export default function FormCreate({ onClose }) {
@@ -19,9 +24,9 @@ export default function FormCreate({ onClose }) {
         console.log("Submitting values:", values);
 
         const toArray = (input) => {
-            if (Array.isArray(input)) return input; // Якщо це вже масив
-            if (typeof input === 'string' && input.trim()) return input.split(',').map(item => item.trim()); // Якщо це заповнений рядок
-            return []; // Якщо це пустий рядок або незаповнене поле
+            if (Array.isArray(input)) return input; 
+            if (typeof input === 'string' && input.trim()) return input.split(',').map(item => item.trim()); 
+            return []; 
         };
 
         const toNumber = (input) => {
@@ -32,7 +37,7 @@ export default function FormCreate({ onClose }) {
             name: values.name,
             age: toNumber(values.age),
             parents: toArray(values.parents),
-            ansestor: toArray(values.ansestor),
+            ancestors: toArray(values.anсestor),
             children: toArray(values.children),
             grandchildren: toArray(values.grandchildren)
         };
@@ -43,7 +48,7 @@ export default function FormCreate({ onClose }) {
             .then(response => {
                 console.log("Response:", response);
                 resetForm();
-                onClose(); // Закриваємо модальне вікно після успішного додавання
+                onClose(); 
             })
             .catch(error => {
                 console.error("Error adding person:", error.response ? error.response.data : error.message);
@@ -55,13 +60,13 @@ export default function FormCreate({ onClose }) {
 
     return (
         <Formik
-            initialValues={{
+            initialValues={{            
                 name: '',
-                age: null,
-                parents: [],
-                ansestor: [],
-                children: [],
-                grandchildren: []
+                age: '',
+                parents: '',
+                anсestors: '',
+                children: '',
+                grandchildren: ''
             }}
             onSubmit={handleSubmit}
             validationSchema={CreateSchema}
@@ -82,9 +87,9 @@ export default function FormCreate({ onClose }) {
                     <Field type="text" name="parents" id={`${fieldId}-parents`} className={css.input} />
                     <ErrorMessage name="parents" component="span" className={css.error} />
 
-                    <label htmlFor={`${fieldId}-ansestor`} className={css.label}>Ansestor</label>
-                    <Field type="text" name="ansestor" id={`${fieldId}-ansestor`} className={css.input} />
-                    <ErrorMessage name="ansestor" component="span" className={css.error} />
+                    <label htmlFor={`${fieldId}-anсestors`} className={css.label}>Anсestors</label>
+                    <Field type="text" name="ansestors" id={`${fieldId}-anсestors`} className={css.input} />
+                    <ErrorMessage name="anсestors" component="span" className={css.error} />
 
                     <label htmlFor={`${fieldId}-children`} className={css.label}>Children</label>
                     <Field type="text" name="children" id={`${fieldId}-children`} className={css.input} />
