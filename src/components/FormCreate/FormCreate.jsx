@@ -20,7 +20,7 @@ export default function FormCreate({ onClose }) {
     const fieldId = useId();
     const dispatch = useDispatch();
 
-    const handleSubmit = (values, { setSubmitting, resetForm }) => {
+    const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         console.log("Submitting values:", values);
 
         const toArray = (input) => {
@@ -37,25 +37,26 @@ export default function FormCreate({ onClose }) {
             name: values.name,
             age: toNumber(values.age),
             parents: toArray(values.parents),
-            ancestors: toArray(values.anсestor),
+            ancestors: toArray(values.ancestor),
             children: toArray(values.children),
             grandchildren: toArray(values.grandchildren)
         };
 
         console.log("Submitting person data:", personData);
 
-        dispatch(addPerson(personData))
-            .then(response => {
+        const response = await dispatch(addPerson(personData)).unwrap();
+
+            try  {
                 console.log("Response:", response);
                 resetForm();
                 onClose(); 
-            })
-            .catch(error => {
+            }
+            catch(error) {
                 console.error("Error adding person:", error.response ? error.response.data : error.message);
-            })
-            .finally(() => {
+            }
+            finally  {
                 setSubmitting(false);
-            });
+            };
     };
 
     return (

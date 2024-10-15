@@ -29,10 +29,15 @@ const familySlice = createSlice({
                 state.error = false;
                 state.loading = true;
             })
-            .addCase(addPerson.fulfilled, (state, action) => {
+        .addCase(addPerson.fulfilled, (state, action) => {
+            console.log("Action payload:", action.payload); // Логування payload
+            if (Array.isArray(state.data)) { // Перевірка, чи є state.data масивом
                 state.data.push(action.payload);
-                state.loading = false;
-            })
+            } else {
+                state.data = [action.payload];
+            }
+            state.loading = false;
+        })
             .addCase(addPerson.rejected, (state) => {
                 state.loading = false;
                 state.error = true;

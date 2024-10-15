@@ -33,7 +33,7 @@ export default function FamilyTree() {
     return (
         <ul className={css.list}>
             {family.map((person) => (
-                <li key={`${person._id}`}>
+                <li key={`${person._id}-${person.name}`}>
                     <Person person={person} />
                 </li>
             ))}
