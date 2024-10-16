@@ -1,11 +1,8 @@
 .body {
     display: flex;    
 }
-
-.buttonBar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: center; 
-    justify-content: center;   
+.text{
+    color: grey;
+    text-align: center;
+    text-shadow: 1px 1px 2px black;
 }

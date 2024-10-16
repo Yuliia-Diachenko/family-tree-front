@@ -5,8 +5,45 @@
     gap: 40px;
     max-width: 1200px;
     gap: 20px;
-    margin: 50px 100px;
     list-style-type: none;
     padding: 0;
-    
+    margin: 0 auto;
+    margin-bottom: 50px;
+    margin-top: 50px;
 }
+.button {
+    cursor: pointer;
+    width: auto;
+    height: auto;
+    border: none;
+
+}
+.buttonBar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center; 
+    justify-content: center;   
+}
+.blink {
+    animation-name: blinker;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
+    animation-duration: 2s;
+    -webkit-animation-name: blinker;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
+    -webkit-animation-duration: 1s;
+    color: black;
+    text-align: center;
+  }
+   
+  @keyframes blinker {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+  }
+   
+  @-webkit-keyframes blinker {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+  }

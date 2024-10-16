@@ -17,7 +17,6 @@ const familySlice = createSlice({
                 state.loading = true;
             })
             .addCase(getFamily.fulfilled, (state, action) => {
-                console.log("Payload data:", action.payload);
                 state.data = action.payload || [];
                 state.loading = false;
             })
@@ -30,8 +29,7 @@ const familySlice = createSlice({
                 state.loading = true;
             })
         .addCase(addPerson.fulfilled, (state, action) => {
-            console.log("Action payload:", action.payload); // Логування payload
-            if (Array.isArray(state.data)) { // Перевірка, чи є state.data масивом
+            if (Array.isArray(state.data)) {
                 state.data.push(action.payload);
             } else {
                 state.data = [action.payload];
@@ -48,6 +46,7 @@ const familySlice = createSlice({
             .addCase(deletePerson.fulfilled, (state, action) => {
                 state.data = state.data.filter((person) => person._id !== action.payload._id);
                 state.loading = false;
+            
             })
             .addCase(deletePerson.rejected, (state, action) => {
                 state.loading = false;

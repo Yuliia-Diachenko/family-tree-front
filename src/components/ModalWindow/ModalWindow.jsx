@@ -20,20 +20,30 @@ const style = {
     p: 4,
   };
 
-export default function ModalWindow() {
+export default function ModalWindow({personId}) {
     const [open, setOpen] = useState(false);
     const [modalType, setModalType] = useState('');
-
+    const [loading, setLoading] = useState(false);
+    console.log('loader:', loading);
     const handleOpen = (type) => {
         setModalType(type);
         setOpen(true);
     };
 
     const handleClose = () => setOpen(false);
+
+    const handleDeleteSuccess = () => {
+        setLoading(false);
+        setOpen(false);
+    };
+
+    const handleDeleteStart = () => {
+        setLoading(true);
+    };
     
     return (
         <>
-            <button type='button' onClick={() => handleOpen('create')} className={css.button}>Create</button>
+            <button type='button' onClick={() => handleOpen('create')} className={css.button} >Create</button>
             <button type='button' onClick={() => handleOpen('update')} className={css.button}>Update</button>
             <button type='button' onClick={() => handleOpen('delete')} className={css.button}>Delete</button>
         <Modal
@@ -47,8 +57,12 @@ export default function ModalWindow() {
         <IoMdClose />
         </button>
                     {modalType === 'create' && <FormCreate onClose={handleClose}/>}
-                    {modalType === 'update' && <FormUpdate />}
-                    {modalType === 'delete' && <DeletePerson />}
+                    {modalType === 'update' && <FormUpdate personId={personId}/>}
+                    {modalType === 'delete' && <DeletePerson 
+                            personId={personId} 
+                            onStart={handleDeleteStart}
+                            onSuccess={handleDeleteSuccess} 
+                            onClose={handleClose}/>}
         </Box>
       </Modal>
         </>
