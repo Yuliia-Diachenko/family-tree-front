@@ -1,21 +1,23 @@
 import { useDispatch } from "react-redux";
-import { deletePerson } from "../../redux/operations.js";
+import { deletePerson, getFamily } from "../../redux/operations.js";
 import css from './DeletePerson.module.css';
 
 export default function DeletePerson({ personId, onStart, onSuccess, onClose }) {   
 
     const dispatch = useDispatch();
-    const handleDelete =async () => {
+    const handleDelete = async () => {
         onStart();
         try {
             await dispatch(deletePerson(personId)).unwrap();
+            await dispatch(getFamily()).unwrap(); // Оновлення списку після видалення
             onSuccess();
-            console.log(`Saccessfully deleted person with id: ${personId}`)
         } catch (error) {
             console.error("Error deleting person:", error);
-            
+            // Можете додати обробку помилок тут
+        }
     };
-};
+
+
     console.log('Person Id:', personId);
 
     return (

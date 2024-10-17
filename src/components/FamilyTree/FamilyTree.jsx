@@ -43,7 +43,7 @@ export default function FamilyTree() {
         <ul className={css.list}>
             {family.map((person) => (
                 <li key={`${person._id}-${person.name}`}>
-                    <button onClick={()=>{handleClick(person._id)}}className={css.button}><Person person={person} /></button>
+                    <button onClick={()=>{handleClick(person._id)}} className={css.button}><Person person={person} /></button>
                 </li>
                 
             ))}

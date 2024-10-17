@@ -23,8 +23,8 @@ const style = {
 export default function ModalWindow({personId}) {
     const [open, setOpen] = useState(false);
     const [modalType, setModalType] = useState('');
-    const [loading, setLoading] = useState(false);
-    console.log('loader:', loading);
+    // const [loading, setLoading] = useState(false);
+    // console.log('loader:', loading);
     const handleOpen = (type) => {
         setModalType(type);
         setOpen(true);
@@ -33,18 +33,18 @@ export default function ModalWindow({personId}) {
     const handleClose = () => setOpen(false);
 
     const handleDeleteSuccess = () => {
-        setLoading(false);
+        // setLoading(false);
         setOpen(false);
     };
 
     const handleDeleteStart = () => {
-        setLoading(true);
+        // setLoading(true);
     };
     
     return (
         <>
             <button type='button' onClick={() => handleOpen('create')} className={css.button} >Create</button>
-            <button type='button' onClick={() => handleOpen('update')} className={css.button}>Update</button>
+            <button type='button' onClick={() => handleOpen('update')} className={css.button}  disabled={!personId}>Update</button>
             <button type='button' onClick={() => handleOpen('delete')} className={css.button}>Delete</button>
         <Modal
         open={open}
@@ -57,7 +57,10 @@ export default function ModalWindow({personId}) {
         <IoMdClose />
         </button>
                     {modalType === 'create' && <FormCreate onClose={handleClose}/>}
-                    {modalType === 'update' && <FormUpdate personId={personId}/>}
+                    {modalType === 'update' && <FormUpdate personId={personId} 
+                            onStart={handleDeleteStart}
+                            onSuccess={handleDeleteSuccess} 
+                            onClose={handleClose}/>}
                     {modalType === 'delete' && <DeletePerson 
                             personId={personId} 
                             onStart={handleDeleteStart}

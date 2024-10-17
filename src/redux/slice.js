@@ -43,11 +43,14 @@ const familySlice = createSlice({
             .addCase(deletePerson.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(deletePerson.fulfilled, (state, action) => {
+            .addCase(deletePerson.fulfilled, (state, action) => { if (Array.isArray(state.data)) {
                 state.data = state.data.filter((person) => person._id !== action.payload._id);
-                state.loading = false;
-            
-            })
+            } else {
+                console.error("Expected state.data to be an array but received:", state.data);
+                state.data = []; 
+            }
+            state.loading = false;
+        })
             .addCase(deletePerson.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
@@ -55,11 +58,12 @@ const familySlice = createSlice({
             .addCase(updatePerson.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(updatePerson.fulfilled, (state, action) => {
-                state.data = state.data.map((person) => 
-                    person._id === action.payload._id ? action.payload : person
-                );
-                state.loading = false;
+            .addCase(updatePerson.fulfilled,(state, action) => {
+                console.log(action.payload);
+        
+                state.data = action.payload;      
+        
+                state.error = null;
             })
             .addCase(updatePerson.rejected, (state, action) => {
                 state.loading = false;
