@@ -7,7 +7,6 @@ export const getFamily = createAsyncThunk("family/getFamily",
     async (_, thunkAPI) => {
         try {
             const response = await axios.get('/family/');
-            console.log("API Response:", response.data); 
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
@@ -19,14 +18,10 @@ export const getPersonById = createAsyncThunk("/family/getPerson",
     async (_id, thunkAPI) => {      
           
         try {
-            const response = await axios.get(`/family/${_id}`);
-    
-        console.log("Response data:", response.data);
+            const response = await axios.get(`/family/${_id}`);    
             return response.data;  
         } catch (error) {
-            console.error("Error fetching family data:", error.message);
             return thunkAPI.rejectWithValue(error.message);
-        
         }
 });
 
@@ -35,13 +30,11 @@ export const addPerson = createAsyncThunk(
     async (newPerson, thunkAPI) => {      
         
         try {
-            console.log("Sending POST request with data:", newPerson);
             const response = await axios.post('/family/', newPerson, {
                 headers: {
                     'Content-Type': 'application/json'
                 }}
             );
-            console.log("Response from server:", response.data);
             return response.data;
         } catch (error) {
             console.error("Error response from server:", error.response ? error.response.data : error.message);

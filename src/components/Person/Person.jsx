@@ -1,7 +1,6 @@
 import css from './Person.module.css';
 
 const Person = ({ person }) => {
-      console.log("Person data:", person); 
       return (
           <div className={css.person}>
               <h3>{person?.name}</h3>
