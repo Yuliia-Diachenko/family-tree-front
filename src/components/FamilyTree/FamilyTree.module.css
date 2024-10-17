@@ -3,7 +3,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 40px;
-    max-width: 1200px;
+    max-width: 1400px;
     gap: 20px;
     list-style-type: none;
     padding: 0;
@@ -13,10 +13,16 @@
 }
 .button {
     cursor: pointer;
-    width: auto;
+    width: 300px;
     height: auto;
     border: 1px solid #494a4b; 
+    border-radius: 20px;
 
+}
+@media screen and (max-width: 400px) {
+  .button {
+    width: 300px;
+  }
 }
 .button:focus {    
   border: 1px solid #1b5dbe; 

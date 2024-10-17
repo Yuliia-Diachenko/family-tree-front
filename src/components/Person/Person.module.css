@@ -1,8 +1,19 @@
+p {
+        display: block;
+        margin-block-start: 4px;
+        margin-block-end: 10px;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        unicode-bidi: isolate;
+    }
+span {
+    font-weight: 400;
+    color: grey;
+}
 .person {
     list-style-type: none;
     padding: 0;
-    margin: 0;
-    width: 240px;
+    margin: 0 auto;
     height: 240px;
     color: #000;
     font-weight: 600;
@@ -16,3 +27,10 @@
     padding: 40px;
     background-color: #f7f7f7;
 }
+
+@media screen and (max-width: 400px) {
+    .person {
+      width: 180px;
+      height: 180px;
+    }
+  }

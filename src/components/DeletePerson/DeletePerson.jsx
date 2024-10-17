@@ -9,11 +9,10 @@ export default function DeletePerson({ personId, onStart, onSuccess, onClose }) 
         onStart();
         try {
             await dispatch(deletePerson(personId)).unwrap();
-            await dispatch(getFamily()).unwrap(); // Оновлення списку після видалення
+            await dispatch(getFamily()).unwrap();
             onSuccess();
         } catch (error) {
             console.error("Error deleting person:", error);
-            // Можете додати обробку помилок тут
         }
     };
 
