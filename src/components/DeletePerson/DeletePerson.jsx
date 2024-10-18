@@ -25,7 +25,7 @@ export default function DeletePerson({ personId, onStart, onSuccess, onClose }) 
         <h3>Are you sure you want to delete this person?</h3>
         <div className={css.buttonContainer}>
             <button className={css.button} onClick={handleDelete}>Yes</button>  
-            <button onClick={onClose} className={css.button} >No</button>          
+            <button onClick={onClose} className={css.button}>No</button>          
         </div>
         </div>
     )
