@@ -16,7 +16,7 @@ const CreateSchema = Yup.object().shape({
        
 });
 
-export default function FormCreate({ onClose }) {
+export default function FormCreate({ onClose, onSuccess }) {
     const fieldId = useId();
     const dispatch = useDispatch();
 
@@ -48,8 +48,9 @@ export default function FormCreate({ onClose }) {
 
             try  {
                 console.log("Response:", response);
+                onSuccess();
                 resetForm();
-                onClose(); 
+                onClose();
             }
             catch(error) {
                 console.error("Error adding person:", error.response ? error.response.data : error.message);

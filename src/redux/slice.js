@@ -47,7 +47,7 @@ const familySlice = createSlice({
                 state.data = state.data.filter((person) => person._id !== action.payload._id);
             } else {
                 console.error("Expected state.data to be an array but received:", state.data);
-                state.data = []; 
+                state.data; 
             }
             state.loading = false;
         })

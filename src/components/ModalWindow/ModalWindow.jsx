@@ -12,10 +12,9 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
-    borderradius: '8px',
+    border: '1px solid #454343',
+    borderRadius: '20px',
     boxShadow: 24,
     p: 4,
   };
@@ -23,8 +22,8 @@ const style = {
 export default function ModalWindow({personId}) {
     const [open, setOpen] = useState(false);
     const [modalType, setModalType] = useState('');
-    // const [loading, setLoading] = useState(false);
-    // console.log('loader:', loading);
+    const [loading, setLoading] = useState(false);
+    console.log('loader:', loading);
     const handleOpen = (type) => {
         setModalType(type);
         setOpen(true);
@@ -33,12 +32,12 @@ export default function ModalWindow({personId}) {
     const handleClose = () => setOpen(false);
 
     const handleDeleteSuccess = () => {
-        // setLoading(false);
+        setLoading(false);
         setOpen(false);
     };
 
     const handleDeleteStart = () => {
-        // setLoading(true);
+        setLoading(true);
     };
     
     return (
@@ -56,7 +55,10 @@ export default function ModalWindow({personId}) {
         <button onClick={handleClose} className={css.iconClose}>
         <IoMdClose />
         </button>
-                    {modalType === 'create' && <FormCreate onClose={handleClose}/>}
+                    {modalType === 'create' && <FormCreate 
+                            onStart={handleDeleteStart}
+                            onSuccess={handleDeleteSuccess} 
+                            onClose={handleClose}/>}
                     {modalType === 'update' && <FormUpdate personId={personId} 
                             onStart={handleDeleteStart}
                             onSuccess={handleDeleteSuccess} 

@@ -1,11 +1,15 @@
 .formContainer {
     display: flex;
     flex-direction: column;
+    width: 400px;
     gap: 8px;
-    max-width: 300px;
-    color: #000;
-    
+    color: #000;    
 }
+@media screen and (max-width: 765px) {
+    .formContainer {
+        max-width: 240px;
+  }}
+
 .error {
     line-height: 1.29;
     color: #d71a1a;
